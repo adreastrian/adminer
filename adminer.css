@@ -494,6 +494,37 @@ MEDIA QUERIES
 
 /*
 ================================================================================
+EDIT PAGE
+================================================================================
+*/
+
+/* Make edit form fields stretch to use available width */
+#edit-fields {
+    width: 100%;
+}
+
+#edit-fields textarea,
+#edit-fields input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]):not([type="hidden"]) {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Textarea height: min 45px, grows with content, caps at 200px */
+#edit-fields textarea {
+    min-height: 45px;
+    max-height: 200px;
+    height: auto;
+    overflow-y: auto;
+    resize: vertical;
+}
+
+/* Gap after form buttons at bottom of edit page */
+#form > p:last-child {
+    margin-bottom: 200px;
+}
+
+/*
+================================================================================
 PLUGINS
 ================================================================================
 */
