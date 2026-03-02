@@ -13,6 +13,7 @@ php -S localhost:8080
 ```
 
 Then open:
+
 - `http://localhost:8080/index.php` (recommended)
 - or `http://localhost:8080/adminer.php`
 
