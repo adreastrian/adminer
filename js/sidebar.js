@@ -35,7 +35,7 @@
         window.addEventListener('pagehide', rememberTableScroll);
         const isMac = /Mac|iPhone|iPad/.test(navigator.platform);
         const shortcut = isMac ? '⌘B' : 'Ctrl+B';
-        const icon = open => '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M9 4v16"/><path d="' + (open ? 'M16 9l-3 3 3 3' : 'M13 9l3 3-3 3') + '"/></svg>';
+        const icon = open => '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M9 4v16"/>' + (open ? '<path d="M16 9l-3 3 3 3"/>' : '') + '</svg>';
         const makeButton = (className, label, markup) => {
             const button = document.createElement('button');
             button.type = 'button';

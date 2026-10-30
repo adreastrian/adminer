@@ -1,92 +1,92 @@
-# Custom Adminer Package
+# Custom Adminer package
 
-Custom Adminer bundle with:
+Run Adminer 6.2.0 with a collapsible sidebar, saved color palettes, and locally bundled Arc Select, Combobox, and Segmented Control components.
 
-- Plugin-enabled `index.php` (Adminer 6.2.0)
-- UI Arc Select, Combobox, and Segmented Control components, bundled locally
-- Light, dark, and system appearance modes with saved color schemes
-- Auto login support using a `.env` file
+## Screenshots
 
-## Previous theme screenshots
+The current theme with sample SQLite data, using Catppuccin Latte for light mode and Macchiato for dark mode.
 
-These screenshots show the previous theme, not the current Arc components.
+![Adminer in Catppuccin Latte, with the sidebar and projects table visible](screenshot-light.png)
 
-![Light theme](/screenshot-light.jpeg?raw=true "Screenshot")
+![Adminer in Catppuccin Macchiato, with the sidebar and projects table visible](screenshot-dark.png)
 
-![Dark theme](/screenshot-dark.jpeg?raw=true "Screenshot")
+## Run locally
 
-## Project Structure
+Use PHP with the extension for your database, such as `mysqli`, `pdo_pgsql`, or `sqlite3`. Node.js is not required to run the app. The built theme assets are committed.
 
-- `index.php`: Main entrypoint with plugin loader enabled
-- `adminer.php`: Standalone entrypoint without the custom plugin stack
-- `vendor/adminer/adminer.php`: Unmodified official Adminer core
-- `vendor/adminer/UPSTREAM.txt`: Release source and verified checksum
-- `adminer-plugins.php`: Active plugin list and load order
-- `adminer-plugins/`: Custom plugin implementations
-- `.env`: Optional credentials for `AutoLogin`
+1. Clone the repository and open its directory:
 
-## Quick Start
+   ```bash
+   git clone https://github.com/adreastrian/adminer.git
+   cd adminer
+   ```
 
-1. Clone/download this repository.
-2. Create a local `.env` file in the project root from the example:
+2. Start the PHP development server:
 
-```bash
-cp .env.example .env
-```
+   ```bash
+   php -S 127.0.0.1:8080
+   ```
 
-3. Update `.env` with your own database credentials:
+3. Open [Adminer on localhost](http://127.0.0.1:8080/index.php).
+4. Choose your database system and enter your connection details.
+5. Click **Login**.
 
-```dotenv
-USERNAME=your_db_username
-PASSWORD=your_db_password
-```
+Keep the development server bound to `127.0.0.1`. Do not expose it to the internet.
 
-4. Run a local PHP server from the project root:
+Use `index.php` for the custom plugins and theme. To bypass the custom plugin stack, open `adminer.php` instead. Both entrypoints load the official core from `vendor/adminer/adminer.php`.
 
-```bash
-php -S 127.0.0.1:8080
-```
+## Save local credentials
 
-5. Open the plugin-enabled app:
+Skip this section if you prefer to enter credentials on the login form.
 
-`http://127.0.0.1:8080/index.php`
+1. Copy the example file to the project root:
 
-## AutoLogin Setup
+   ```bash
+   cp .env.example .env
+   ```
 
-`AutoLogin` reads credentials from `.env` in the project root.
+2. Set `USERNAME` and `PASSWORD` in `.env`:
 
-`.env` is gitignored; commit only `.env.example`.
+   ```dotenv
+   USERNAME=your_db_username
+   PASSWORD=your_db_password
+   ```
 
-Requirements:
+Keep one `KEY=value` pair per line. The `AutoLogin` plugin uses these values as credential defaults. You still choose the database connection in Adminer.
 
-- File name must be exactly `.env`
-- Keys must be exactly `USERNAME` and `PASSWORD`
-- One `KEY=value` per line
-- Do not place `.env` inside `adminer-plugins/`
+The repository ignores `.env`. Never commit credentials. On a web server, block HTTP access to `.env` and restrict access to Adminer itself.
 
-If `.env` is missing, Adminer still works and you can log in manually.
+## Use the sidebar
 
-## Enabled Plugins
+Click the toolbar's sidebar button to collapse or expand the sidebar. The closed-state button uses a plain split-panel icon. The browser remembers the desktop sidebar state.
 
-The default plugin stack is configured in `adminer-plugins.php`:
+Press **⌘B** on Mac or **Ctrl+B** elsewhere to toggle the sidebar. The shortcut does not run while you edit text or use a dropdown.
 
-- `LoadDependencies`
-- `AdminerDatabaseHide`
-- `AdminerEditTextarea`
-- `AdminerEnumOption`
-- `AdminerEditForeign`
-- `AdminerTablesFilter`
-- `AdminerJsonPreview`
-- `AdminerCollations`
-- `FixedFooter`
-- `AutoLogin`
-- `AdminerDarkSwitcher`
+To find a table, use **Find a table**. When the sidebar is collapsed, click its search icon to expand it and focus the search field.
+
+Click the database name to show the database selector and tools for SQL, import, export, and table creation. On table selection pages, open **Query options** to change filters, columns, sort order, and limits.
+
+On narrow screens, the sidebar opens over the page. Press **Escape** or click outside the sidebar to close it.
+
+## Choose an appearance
+
+Open **Appearance** at the bottom of the sidebar. Choose **Light**, **Dark**, or **System**, then select a **Theme family**. Set **Light palette** and **Dark palette** separately. The browser saves your choices.
+
+The default Catppuccin pair is Frappé for light mode and Macchiato for dark mode. Both palettes use dark colors. For a light background, choose **Latte** as the **Light palette**.
+
+Other theme families include One, Ayu, Monokai, Nord, Solarized, Gruvbox, and Tokyo Night. Monokai Paper is a custom light companion, not an official Monokai variant. Palette sources are recorded in [`PALETTES.txt`](PALETTES.txt).
+
+To change the interface language, use the language selector inside **Appearance**.
+
+## Change the plugins
+
+Edit [`adminer-plugins.php`](adminer-plugins.php) to enable or disable plugins. Keep `LoadDependencies` first. Custom plugin implementations are in [`adminer-plugins/`](adminer-plugins/).
+
+The default stack includes table search, JSON previews, foreign-key editing, credential defaults, and appearance controls.
 
 ## Rebuild the theme components
 
-The committed `assets/arc-ui.js` and `assets/arc-ui.css` files work without Node on the PHP server.
-
-After changing files under `ui/`, rebuild the assets:
+After you change files under `ui/`, run these commands with Node.js and npm:
 
 ```bash
 npm ci
@@ -94,33 +94,6 @@ npm run typecheck
 npm run build
 ```
 
-Deploy both generated assets with the PHP files, `vendor/`, the CSS files, `js/`, and `fonts/`. Both entrypoints require `vendor/`.
+Deploy both generated files, `assets/arc-ui.js` and `assets/arc-ui.css`, with the PHP files, `adminer-plugins/`, `plugins/`, `vendor/`, the root CSS files, `assets/`, `js/`, and `fonts/`.
 
-The component sources and their license are in `ui/arc/`. The native PHP forms still submit database requests.
-
-## Sidebar
-
-The toolbar toggle collapses the sidebar to an icon rail. Its arrow changes with the sidebar state. The browser remembers the desktop state across page loads.
-
-The keyboard shortcut is **⌘B** on Mac and **Ctrl+B** elsewhere. The shortcut leaves text editing and open dropdown controls alone.
-
-The rail keeps database selection, navigation, table search, appearance, and logout available. On narrow screens, the expanded sidebar overlays the workspace and closes with Escape or a click outside it.
-
-The expanded sidebar keeps database tools behind the database-name disclosure. Table filtering and the table list remain visible. Appearance also contains the language selector.
-
-Selection pages keep query controls behind one disclosure. The query summary shows the active filter count. Table navigation and SQL remain in their original positions.
-
-Navigation still uses Adminer's server-rendered pages. Early layout rules reduce page-load shifts, and the sidebar restores its table-list scroll position.
-
-## Color schemes
-
-**Appearance** groups palettes by theme family and stores separate light and dark choices in the browser. Catppuccin includes Latte, Frappé, Macchiato, and Mocha. The default pair remains Frappé and Macchiato, both dark palettes.
-
-Other families include One, Ayu, Monokai, Nord, Solarized, Gruvbox, and Tokyo Night. Monokai Paper is an Adminer light companion, not an official Monokai variant.
-
-`PALETTES.txt` records the sources and the installed Tern and Rex Beta resources inspected for this catalog.
-
-## Notes
-
-- Use `index.php` if you want custom plugins and theming.
-- Opening `adminer.php` directly bypasses this custom plugin setup.
+Keep the Arc license with the deployed assets. The component sources and license are in [`ui/arc/`](ui/arc/). The Adminer release source and checksum are in [`vendor/adminer/UPSTREAM.txt`](vendor/adminer/UPSTREAM.txt).
