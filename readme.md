@@ -4,7 +4,7 @@ Run Adminer 6.2.0 with a collapsible sidebar, saved color palettes, and locally 
 
 ## Screenshots
 
-The current theme with sample SQLite data, using Catppuccin Latte for light mode and Macchiato for dark mode.
+These screenshots use sample SQLite data with Catppuccin Latte for light mode and Macchiato for dark mode.
 
 ![Adminer in Catppuccin Latte, with the sidebar and projects table visible](screenshot-light.png)
 
@@ -17,14 +17,14 @@ Use PHP with the extension for your database, such as `mysqli`, `pdo_pgsql`, or 
 1. Clone the repository and open its directory:
 
    ```bash
-   git clone https://github.com/adreastrian/adminer.git
-   cd adminer
+	git clone https://github.com/adreastrian/adminer.git
+	cd adminer
    ```
 
 2. Start the PHP development server:
 
    ```bash
-   php -S 127.0.0.1:8080
+	php -S 127.0.0.1:8080
    ```
 
 3. Open [Adminer on localhost](http://127.0.0.1:8080/index.php).
@@ -42,23 +42,23 @@ Skip this section if you prefer to enter credentials on the login form.
 1. Copy the example file to the project root:
 
    ```bash
-   cp .env.example .env
+	cp .env.example .env
    ```
 
 2. Set `USERNAME` and `PASSWORD` in `.env`:
 
    ```dotenv
-   USERNAME=your_db_username
-   PASSWORD=your_db_password
+	USERNAME=your_db_username
+	PASSWORD=your_db_password
    ```
 
-Keep one `KEY=value` pair per line. The `AutoLogin` plugin uses these values as credential defaults. You still choose the database connection in Adminer.
+Keep both keys, with one unquoted `KEY=value` pair per line. The parser does not support comments or `=` inside values. The `AutoLogin` plugin uses these values as credential defaults. You still choose the database connection in Adminer.
 
 The repository ignores `.env`. Never commit credentials. On a web server, block HTTP access to `.env` and restrict access to Adminer itself.
 
 ## Use the sidebar
 
-Click the toolbar's sidebar button to collapse or expand the sidebar. The closed-state button uses a plain split-panel icon. The browser remembers the desktop sidebar state.
+Click the toolbar's sidebar button to collapse or expand the sidebar. The browser remembers the desktop sidebar state.
 
 Press **⌘B** on Mac or **Ctrl+B** elsewhere to toggle the sidebar. The shortcut does not run while you edit text or use a dropdown.
 
@@ -89,11 +89,11 @@ The default stack includes table search, JSON previews, foreign-key editing, cre
 After you change files under `ui/`, run these commands with Node.js and npm:
 
 ```bash
-npm ci
-npm run typecheck
-npm run build
+	npm ci
+	npm run typecheck
+	npm run build
 ```
 
-Deploy both generated files, `assets/arc-ui.js` and `assets/arc-ui.css`, with the PHP files, `adminer-plugins/`, `plugins/`, `vendor/`, the root CSS files, `assets/`, `js/`, and `fonts/`.
+Deploy the PHP files, `adminer-plugins/`, `vendor/`, the root CSS files, `assets/`, `js/`, and `fonts/`. Include the rebuilt `assets/arc-ui.js` and `assets/arc-ui.css`, and keep `assets/arc-ui.LICENSE.txt` beside them.
 
-Keep the Arc license with the deployed assets. The component sources and license are in [`ui/arc/`](ui/arc/). The Adminer release source and checksum are in [`vendor/adminer/UPSTREAM.txt`](vendor/adminer/UPSTREAM.txt).
+The component sources and license are in [`ui/arc/`](ui/arc/). The Adminer release source and checksum are in [`vendor/adminer/UPSTREAM.txt`](vendor/adminer/UPSTREAM.txt).

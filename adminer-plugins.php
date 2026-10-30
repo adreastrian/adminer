@@ -12,8 +12,6 @@ return [
     new AdminerEnumOption,
     new AdminerEditForeign,
     new AdminerTablesFilter,
-    // new AdminerFloatThead,
-    // new AdminerMenuScroller,
     new AdminerJsonPreview,
     new AdminerCollations,
     new FixedFooter,

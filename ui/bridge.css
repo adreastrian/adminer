@@ -51,7 +51,6 @@ select[data-arc-enhanced], input[data-arc-enhanced] {
 }
 .arc-appearance-controls { display: grid; gap: var(--space-4); min-width: 0; }
 #arc-appearance.arc-appearance-ready > :not(.arc-island) { display: none; }
-.arc-palette-note { margin: 0; color: var(--text-secondary); font-size: var(--text-xs); line-height: 1.5; }
 .arc-field-error { display: block; margin-top: var(--space-2); color: var(--danger); font-size: var(--text-xs); }
 .arc-native-description { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
 @media (max-width: 800px) {
