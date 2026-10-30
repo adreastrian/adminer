@@ -136,23 +136,21 @@ class AdminerJsonPreview extends \Adminer\Plugin
             (function(document) {
                 "use strict";
 
-                document.addEventListener("DOMContentLoaded", init, false);
+                // Delegated: Adminer's syntax highlighter re-renders <code class="jush-*"> cells after load, replacing the icons.
+                document.addEventListener("click", function(event) {
+                    const button = event.target.closest && event.target.closest("a.json-icon");
+                    if (!button) return;
 
-                function init() {
-                    const links = document.querySelectorAll('a.json-icon');
-
-                    for (let i = 0; i < links.length; i++) {
-                        links[i].addEventListener("click", function(event) {
-                            event.preventDefault();
-                            toggleJson(this);
-                        }, false);
-                    }
-                }
+                    event.preventDefault();
+                    toggleJson(button);
+                }, false);
 
                 function toggleJson(button) {
                     const index = button.dataset.index;
 
-                    const obj = document.getElementById("json-code-" + index);
+                    // Ids repeat across "Load more" pages, so search only the clicked cell.
+                    const cell = button.closest("td");
+                    const obj = cell && cell.querySelector("#json-code-" + index);
                     if (!obj) return;
 
                     if (obj.style.display === "none") {
