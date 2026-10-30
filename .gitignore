@@ -3,3 +3,5 @@
 .env.local
 .env.*.local
 !.env.example
+node_modules/
+.scratch-arc/

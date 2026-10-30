@@ -621,16 +621,16 @@ option {
     min-width: 140px;
 }
 
-input:not([type]),
-input[type="color"],
-input[type="email"],
-input[type="number"],
-input[type="password"],
-input[type="tel"],
-input[type="url"],
-input[type="text"],
-input[type="search"],
-textarea {
+input:not([type]):not(:where(.arc-island *)),
+input[type="color"]:not(:where(.arc-island *)),
+input[type="email"]:not(:where(.arc-island *)),
+input[type="number"]:not(:where(.arc-island *)),
+input[type="password"]:not(:where(.arc-island *)),
+input[type="tel"]:not(:where(.arc-island *)),
+input[type="url"]:not(:where(.arc-island *)),
+input[type="text"]:not(:where(.arc-island *)),
+input[type="search"]:not(:where(.arc-island *)),
+textarea:not(:where(.arc-island *)) {
     border: 0;
     padding: 12px 16px;
     margin: 0;
@@ -643,30 +643,30 @@ textarea {
     vertical-align: middle;
 }
 
-input:not([type]):focus,
-input[type="color"]:focus,
-input[type="email"]:focus,
-input[type="number"]:focus,
-input[type="password"]:focus,
-input[type="tel"]:focus,
-input[type="url"]:focus,
-input[type="text"]:focus,
-input[type="search"]:focus,
-textarea:focus,
-select:focus {
+input:not([type]):not(:where(.arc-island *)):focus,
+input[type="color"]:not(:where(.arc-island *)):focus,
+input[type="email"]:not(:where(.arc-island *)):focus,
+input[type="number"]:not(:where(.arc-island *)):focus,
+input[type="password"]:not(:where(.arc-island *)):focus,
+input[type="tel"]:not(:where(.arc-island *)):focus,
+input[type="url"]:not(:where(.arc-island *)):focus,
+input[type="text"]:not(:where(.arc-island *)):focus,
+input[type="search"]:not(:where(.arc-island *)):focus,
+textarea:not(:where(.arc-island *)):focus,
+select:not(:where(.arc-island *)):focus {
     outline: 0;
     background-color: var(--color-input-focus-background);
 }
 
-table:not(#table) input:not([type]),
-table:not(#table) input[type="color"],
-table:not(#table) input[type="email"],
-table:not(#table) input[type="number"],
-table:not(#table) input[type="password"],
-table:not(#table) input[type="tel"],
-table:not(#table) input[type="url"],
-table:not(#table) input[type="text"],
-table:not(#table) input[type="search"] {
+table:not(#table) input:not([type]):not(:where(.arc-island *)),
+table:not(#table) input[type="color"]:not(:where(.arc-island *)),
+table:not(#table) input[type="email"]:not(:where(.arc-island *)),
+table:not(#table) input[type="number"]:not(:where(.arc-island *)),
+table:not(#table) input[type="password"]:not(:where(.arc-island *)),
+table:not(#table) input[type="tel"]:not(:where(.arc-island *)),
+table:not(#table) input[type="url"]:not(:where(.arc-island *)),
+table:not(#table) input[type="text"]:not(:where(.arc-island *)),
+table:not(#table) input[type="search"]:not(:where(.arc-island *)) {
     min-width: 280px;
 }
 

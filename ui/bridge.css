@@ -1,0 +1,59 @@
+/* Layout adapters and shared control tokens. */
+:root {
+    --control-height-md: var(--ui-control-height, 38px);
+    --radius-control: var(--ui-radius, 8px);
+    --text-sm: .8125rem;
+}
+.arc-island {
+    color: var(--foreground);
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    line-height: var(--leading-body);
+    letter-spacing: normal;
+    text-align: start;
+}
+.arc-select-island {
+    display: inline-block;
+    width: 14rem;
+    max-width: 100%;
+    vertical-align: middle;
+}
+.arc-select-island[data-arc-database] { display: block; width: 100%; }
+.arc-select-island[hidden] { display: none !important; }
+.arc-select-island[data-arc-query] {
+    width: 12rem;
+}
+.arc-select-island[data-arc-isolated] { white-space: normal; }
+/* Keep external Adminer labels and the component's programmatic name. */
+.arc-select-island:not([data-arc-database]) > div > label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+}
+select[data-arc-enhanced], input[data-arc-enhanced] {
+    position: absolute !important;
+    width: 1px !important;
+    min-width: 0 !important;
+    height: 1px !important;
+    margin: -1px !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+.arc-appearance-controls { display: grid; gap: var(--space-4); min-width: 0; }
+#arc-appearance.arc-appearance-ready > :not(.arc-island) { display: none; }
+.arc-palette-note { margin: 0; color: var(--text-secondary); font-size: var(--text-xs); line-height: 1.5; }
+.arc-field-error { display: block; margin-top: var(--space-2); color: var(--danger); font-size: var(--text-xs); }
+.arc-native-description { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
+@media (max-width: 800px) {
+    .arc-select-island { max-width: min(100%, calc(100vw - 48px)); }
+}
