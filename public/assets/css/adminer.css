@@ -1,0 +1,210 @@
+@import "color-schemes.css";
+@import "adminer-base.css";
+@import "json-preview.css";
+@import "shell.css";
+
+@font-face {
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 400 500;
+    font-display: swap;
+    src: url(../fonts/inter-latin.woff2) format("woff2");
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Workspace geometry and typography shared by native and enhanced controls. */
+:root {
+    --arc-ease: cubic-bezier(.22, 1, .36, 1);
+    --ui-sidebar-width: 264px;
+    --ui-content-spacing: 32px;
+    --ui-radius: 8px;
+    --ui-control-height: 38px;
+    --ui-checkbox-radius: 4px;
+    --ui-radio-radius: 10px;
+}
+
+/* Adminer's built-in stylesheet consumes these four compatibility tokens. */
+:root, html.light-theme {
+    --bg: var(--arc-canvas);
+    --fg: var(--arc-text);
+    --dim: var(--arc-surface);
+    --lit: var(--arc-hover);
+}
+
+body {
+    margin: 0;
+    min-width: 0;
+    font: 13px/1.5 Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+input, select, textarea { font-family: inherit; }
+h2 { font-family: inherit; font-size: 28px; line-height: 1.25; font-weight: 500; margin: 24px 0; letter-spacing: -.7px; }
+h3 { margin: 24px 0 12px; font-size: 14px; font-weight: 500; letter-spacing: -.2px; text-transform: none; }
+legend { text-transform: none; font-size: 13px; line-height: 1.5; font-weight: 500; font-family: inherit; }
+a { text-underline-offset: 3px; }
+a[href*="charsets"] { display: inline; }
+#content { padding: 0 0 32px; min-width: 0; }
+#content > p + form { margin-top: 20px; }
+#breadcrumb { height: auto; white-space: normal; padding: 20px 0; margin-bottom: 0 !important; border-bottom: 1px solid var(--arc-border); font-size: 12px; color: var(--arc-muted); }
+#breadcrumb a { color: var(--arc-muted); }
+
+/* Workspace rail: text labels stay visible, even without JavaScript. */
+#menu { padding: 20px 16px; z-index: 20; gap: 4px; overflow-y: auto; }
+#menu h1 { display: block; padding: 0 8px; margin: 0 0 20px; background: none; font-size: 19px; line-height: 28px; text-transform: none; letter-spacing: -.6px; }
+#menu h1 .version { font-size: 11px; font-weight: 400; letter-spacing: 0; color: var(--arc-muted); }
+#menu #dbs { overflow: visible; color: var(--arc-text); font-size: 13px; }
+#menu #dbs label { width: 100%; margin: 0; }
+#menu #dbs span { visibility: visible; }
+#menu #dbs:has([data-arc-enhanced]) { font-size: 0; }
+#menu #dbs .arc-select-island > div > label { position: static; display: block; width: auto; height: auto; margin: 0 0 8px; clip: auto; overflow: visible; white-space: normal; font-size: 12px; color: var(--arc-muted); }
+#menu #dbs select { font-size: 13px; }
+#menu p.links { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin: 12px 0; text-align: start; }
+#menu p.links a { display: flex; align-items: center; gap: 8px; padding: 8px; border-radius: 8px; color: var(--arc-muted); font-size: 12px; text-decoration: none; }
+#menu p.links a::before { content: ""; flex: 0 0 15px; height: 15px; background: currentColor; mask: url(../icons/database.svg) center / contain no-repeat; }
+#menu .links a[href$="&sql="]::before { mask-image: url(../icons/code.svg); }
+#menu .links a[href$="&import="]::before { mask-image: url(../icons/import.svg); }
+#menu .links a[href*="&dump="]::before { mask-image: url(../icons/export.svg); }
+#menu .links a[href$="&create="]::before { mask-image: url(../icons/create-table.svg); }
+#menu p.links a:hover, #menu p.links a.active { background: var(--arc-hover); color: var(--arc-text); }
+#tables { margin: 8px -4px 0; padding: 0 4px; scrollbar-width: thin; scrollbar-color: var(--arc-border) transparent; }
+#tables li { align-items: center; border-radius: 8px; margin: 2px 0; min-height: 34px; }
+#tables li:hover, #tables li:has(a.active) { background: var(--arc-hover); }
+#tables a { padding: 7px 8px; font-size: 13px; }
+#tables a.active { font-weight: 500; }
+#tables a.select { font-size: 11px; color: var(--arc-muted); }
+#tables li.hidden { display: none; }
+#filter-field { width: 100%; border-radius: 999px; }
+#lang { top: auto; bottom: 12px; position: static; margin: 0; padding: 8px; font-size: 12px; }
+#lang select { width: auto; padding: 4px; color: var(--arc-muted); }
+
+/* Action navigation is a segmented control, not a row of oversized links. */
+#content p.links { display: flex; flex-wrap: wrap; gap: 4px; width: fit-content; margin: 16px 0; padding: 4px; background: var(--arc-surface); border: 1px solid var(--arc-border); border-radius: 20px; }
+#content p.links a, #content p.links a:last-child { display: inline-block; padding: 6px 14px; border-radius: 16px; font-size: 12px; color: var(--arc-muted); text-decoration: none; }
+#content p.links a:hover { background: var(--arc-hover); }
+#content p.links a.active { background: var(--arc-primary); color: var(--arc-on-primary); font-weight: 500; }
+
+/* Dense data, generous chrome. No block/flex overrides on table cells. */
+table { margin: 16px 0; font-variant-numeric: tabular-nums; }
+th, td { padding: 9px 12px; font-size: 13px; line-height: 1.45; }
+table:not(.checkable) th { min-width: 0; }
+thead td, thead th { text-align: start; padding: 10px 12px; border-bottom: 1px solid var(--arc-border); }
+/* Blank selection/action cells share the header surface, including .hover cells. */
+html.js #content thead > tr > :is(td, th) { background: var(--arc-surface); border-bottom: 1px solid var(--arc-border); }
+#content a.doc { display: none; }
+#content :is(h2, h3):target { background: transparent; color: var(--arc-primary); scroll-margin-top: 16px; }
+thead td a, thead th a, thead td a:visited, thead th a:visited,
+thead td a:link:hover, thead th a:link:hover, thead td a:visited:hover, thead th a:visited:hover { padding: 0; font-weight: 500; }
+table.checkable, p.links + table, pre + table, #edit-fields, p + table, h3 + table, .scrollable table { border: 1px solid var(--arc-border); border-radius: 12px; border-spacing: 0; border-collapse: separate; margin-bottom: 20px; box-shadow: none; }
+.checkable tbody td, .checkable tbody th { border-bottom: 1px solid var(--arc-border); }
+.checkable tbody tr:last-child td, .checkable tbody tr:last-child th { border-bottom: 0; }
+thead tr:first-child > :first-child { border-start-start-radius: 11px; }
+thead tr:first-child > :last-child { border-start-end-radius: 11px; }
+#content table:not(.layout):not(.json) { overflow: clip; }
+#content table:not(.layout):not(.json) > :is(tbody, tfoot):last-child > tr:last-child > :first-child { border-end-start-radius: 11px; }
+#content table:not(.layout):not(.json) > :is(tbody, tfoot):last-child > tr:last-child > :last-child { border-end-end-radius: 11px; }
+.scrollable { position: relative; max-width: 100%; max-height: max(12rem, calc(100dvh - 14rem)); overflow: auto; scrollbar-width: thin; }
+.scrollable > table { margin-top: 0; }
+.scrollable thead { top: 0; z-index: 2; background: var(--arc-surface); }
+.scrollable.viewport-table { max-height: none; }
+.scrollable thead.header-pinned > tr > :is(td, th) { border-start-start-radius: 0; border-start-end-radius: 0; }
+/* Header actions participate in cell sizing instead of covering adjacent labels. */
+.js th .column { position: static; vertical-align: middle; margin-inline-start: 8px; padding: 0; background: transparent; border: 0; border-radius: 4px; white-space: nowrap; }
+.js th .column a, .js th .column a:hover { width: 24px; height: 24px; align-items: center; text-indent: 0; color: var(--arc-muted); border-radius: 4px; }
+.js th .column a:hover { background: var(--arc-hover); color: var(--arc-text); }
+table.layout { border: 0; background: transparent; box-shadow: none; }
+table.layout tbody tr:hover td, table.layout tbody tr:hover th { background: transparent; }
+
+/* Native controls retain browser semantics and Adminer's form submission. */
+:is(input:not([type]), input[type="text"], input[type="search"], input[type="password"], input[type="number"], input[type="email"], input[type="url"], input[type="tel"], input[type="color"], textarea, select):not(:where(.arc-island *)) {
+    border: 1px solid var(--arc-border); padding: 8px 11px; font-size: 13px; line-height: 1.5; border-radius: 8px; max-width: 100%;
+}
+:is(input:not([type]), input[type="text"], input[type="search"], input[type="password"], input[type="number"], input[type="email"], input[type="url"], input[type="tel"], select):not(:where(.arc-island *)):not([data-arc-enhanced]) { height: var(--ui-control-height); box-sizing: border-box; vertical-align: middle; }
+select { appearance: auto; -webkit-appearance: auto; background-image: none; padding-inline-end: 8px; }
+option { color: var(--arc-text); background: var(--arc-surface); }
+input[type="submit"], input[type="button"] { font-size: 13px; font-weight: 500; text-transform: none; letter-spacing: 0; border-radius: 999px; padding: 0 18px; height: var(--ui-control-height); box-sizing: border-box; line-height: 1.5; vertical-align: middle; }
+input[type="submit"]:hover, input[type="button"]:hover { filter: brightness(.9); }
+input[type="checkbox"], input[type="radio"] { width: 16px; height: 16px; vertical-align: middle; flex-shrink: 0; }
+input[type="checkbox"]:checked::before, input[type="radio"]:checked::before { font-size: 11px; }
+input:disabled, button:disabled, select:disabled { cursor: not-allowed; opacity: .6; }
+html body :is(a, input, select, textarea, summary, [tabindex]):focus-visible { outline: 2px solid var(--arc-focus); outline-offset: 3px; }
+fieldset { margin: 0 20px 16px 0; padding: 8px 0; max-width: 100%; }
+label.block { display: block; }
+#fieldset-select, #fieldset-search, #fieldset-sort { padding: 8px 12px; border: 1px solid var(--arc-border); border-radius: 12px; background: var(--arc-surface); }
+#fieldset-select > div, #fieldset-search > div, #fieldset-sort > div { margin-bottom: 8px; }
+#fieldset-search > div,
+#content fieldset > div:has(> input[name="query"]),
+#content form > :is(p, div):has(> input[list]) { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+#fieldset-search > div > :is(.arc-select-island, input:not([type="hidden"])) { margin: 0; }
+#fieldset-search > div:last-child { margin-bottom: 0; }
+code, pre, .sqlarea { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace; }
+p code, pre code, pre[contenteditable="true"] { font-size: 13px; }
+#content code.sql { display: block; max-width: 100%; overflow-x: auto; box-sizing: border-box; }
+.sqlarea.jush { background: var(--arc-surface); box-shadow: inset 0 0 0 1px var(--arc-border); font-size: 13px; line-height: 1.65; border-radius: 12px; }
+.sqlarea.jush:focus-visible { box-shadow: inset 0 0 0 2px var(--arc-focus); }
+.error, .message { padding: 12px 16px; margin: 16px 0; font-size: 13px; border: 1px solid var(--arc-border); border-radius: 12px; }
+.message { border-inline-start: 3px solid var(--arc-success); background: var(--arc-surface); }
+.error { border-inline-start: 3px solid var(--arc-danger); }
+#help { padding: 8px 12px; border: 1px solid var(--arc-border); box-shadow: var(--arc-shadow); }
+.footer, .footer > div, .footer + div { margin: 0; padding: 12px 0; background: var(--arc-canvas); box-shadow: none; }
+.footer { position: static; border-top: 1px solid var(--arc-border); }
+.footer > div { border: 0; }
+.footer fieldset { margin-bottom: 0; }
+
+/* Appearance controls stay in the navigation rail. */
+.custom-nav-menu { display: flex; flex-direction: column; gap: 12px; margin-top: auto; padding-top: 16px; border-top: 1px solid var(--arc-border); }
+.appearance-settings { width: 100%; }
+.appearance-settings summary { cursor: pointer; padding: 8px; border-radius: 8px; color: var(--arc-muted); font-weight: 500; }
+.appearance-settings summary:hover { background: var(--arc-hover); color: var(--arc-text); }
+#arc-appearance { padding: 12px 0 4px; }
+#arc-appearance > label { display: block; margin: 12px 0 6px; }
+#arc-appearance > select { width: 100%; }
+#menu .appearance-hint { margin: 8px 0 0; color: var(--arc-muted); font-size: 12px; line-height: 1.5; white-space: normal; }
+#menu > h1 { flex-shrink: 0; }
+#menu .custom-nav-menu { flex-shrink: 0; }
+#menu #tables { min-height: 40px; }
+.logout, .rtl .logout { position: static; margin: 0; background: transparent; box-shadow: none; font-size: 11px; }
+.logout span { color: var(--arc-muted); }
+.logout input[type="submit"] { padding: 0 8px; font-size: 12px; }
+
+/* Native Adminer action icons. */
+.icon { mask: url(../icons/expand.svg) center / contain no-repeat; background: var(--arc-muted); background-image: none !important; }
+.icon-up { mask-image: url(../icons/up.svg); }
+.icon-down { mask-image: url(../icons/down.svg); }
+.icon-plus { mask-image: url(../icons/plus.svg); }
+.icon-cross { mask-image: url(../icons/cancel.svg); }
+.icon-move { mask-image: url(../icons/hamburger.svg); }
+.icon:hover { background-color: var(--arc-text); }
+
+/* Motion answers interaction; data itself never bounces or slides. */
+#menu a, #tables li, #content p.links a, .appearance-settings summary, input, select, textarea {
+    transition: background-color 160ms var(--arc-ease), color 160ms var(--arc-ease), border-color 160ms var(--arc-ease), box-shadow 160ms var(--arc-ease);
+}
+input[type="submit"]:active:not(:disabled), input[type="button"]:active:not(:disabled) { transform: scale(.98); }
+@media (prefers-reduced-motion: reduce) {
+    html body *, html body *::before, html body *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+    input[type="submit"]:active:not(:disabled), input[type="button"]:active:not(:disabled) { transform: none; }
+}
+
+.rtl #content { margin: 0 calc(var(--ui-sidebar-width) + var(--ui-content-spacing)) 0 var(--ui-content-spacing); padding: 0 0 32px; }
+.rtl #menu { border-right: 0; border-left: 1px solid var(--arc-border); }
+@media (max-width: 800px) {
+    :root { --ui-content-spacing: 16px; --ui-control-height: 44px; }
+    #content, .rtl #content { margin: 0 16px !important; padding-top: 48px; }
+    #menu { min-width: 0; max-width: calc(100vw - 48px); border: 1px solid var(--arc-border); box-shadow: var(--arc-shadow); }
+    #menu h1 { padding-inline-start: 48px; }
+    #menu #logo { display: none; }
+    #menu p.links a, #tables a { min-height: 44px; box-sizing: border-box; }
+    input[type="submit"], input[type="button"] { min-height: 44px; }
+    .js #menuopen { position: fixed; top: 12px; left: 16px; z-index: 21; padding: 12px; background: var(--arc-raised); border: 1px solid var(--arc-border); border-radius: 8px; }
+    #breadcrumb { position: static; font-size: 12px; overflow-wrap: anywhere; }
+    h2 { font-size: 23px; }
+    th, td { padding: 8px; }
+    table:not(#table) input:not([type]), table:not(#table) input[type="text"], table:not(#table) input[type="password"], table:not(#table) input[type="number"], table:not(#table) input[type="email"] { min-width: 0; }
+    fieldset { margin-right: 8px; }
+    #content p.links { border-radius: 14px; }
+}
+@media print {
+    #menu, .custom-nav-menu, .logout { display: none; }
+    #content, .rtl #content { margin: 0; padding: 0; }
+    body { color: #000; background: #fff; }
+}

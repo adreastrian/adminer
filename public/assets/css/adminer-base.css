@@ -1,0 +1,308 @@
+/* Native Adminer layout, controls, SQL highlighting, and schema views.
+ * Adapted from Dark Theme by Pepa Linha, version 2.0.1 (http://webdream.cz).
+ * Colors use the shared Arc semantic palette; this is not a separate theme.
+ */
+
+/* Document and type resets over the bundled Adminer stylesheet. */
+html,
+body {
+    height: 100%;
+}
+body { background: var(--arc-canvas); color: var(--arc-text); width: auto; }
+h1 { margin: 0; padding: 0; background: none; border: 0; }
+h2 { padding: 0 0 6px; background: none; border: 0; color: inherit; }
+.rtl h2 { margin: 0 0 40px; }
+h3 { padding: 0 0 6px; color: var(--arc-text); }
+p { margin: 0 0 15px; }
+a, a:visited { color: var(--arc-text); text-decoration: none; }
+a:link:hover, a:visited:hover { color: var(--arc-text); text-decoration: underline; }
+
+/* Native tables, selection state, and query fieldsets. */
+table { background: var(--arc-canvas); border: 0; }
+th, td { border: 0; color: var(--arc-text); }
+th { background: none; color: var(--arc-muted); font-weight: normal; }
+tbody tr:hover td, tbody tr:hover th { background: var(--arc-raised); }
+thead td, thead th { background: var(--arc-surface); }
+thead td,
+thead td a,
+thead td a:link:hover,
+thead td a:visited,
+thead td a:visited:hover,
+thead th,
+thead th a,
+thead th a:link:hover,
+thead th a:visited,
+thead th a:visited:hover {
+    color: var(--arc-muted);
+    font-weight: bold;
+}
+#content .links + p { color: var(--arc-muted); }
+.checkable tbody tr:hover td, .checkable tbody tr:hover th { background: var(--arc-raised); }
+.js .checkable .checked td, .js .checkable .checked th { background: var(--arc-hover); }
+.checkable .checked td:first-child { box-shadow: inset 2px 0 0 var(--arc-text); }
+.odds tbody tr:nth-child(2n) { background: transparent; }
+fieldset { display: inline-block; border: 0; }
+fieldset select { margin-right: 15px; }
+fieldset input[type="button"], fieldset input[type="submit"], fieldset p { margin-bottom: 0; }
+fieldset div p { margin-top: 10px; }
+legend { display: inline-block; padding: 10px 0; margin: 0; color: var(--arc-text); }
+legend a, legend a:link:hover { color: inherit; text-decoration: underline; }
+code { background: none; }
+p code, pre code, pre[contenteditable="true"] { padding: 10px 15px; display: block; margin-bottom: 15px; }
+p code + a,
+p code + a:link:hover,
+p code + a:visited:hover {
+    margin-left: 15px;
+    position: relative;
+    top: -20px;
+    color: var(--arc-text);
+    font-size: 12px;
+    text-decoration: underline;
+    text-transform: lowercase;
+}
+
+/* Native navigation remains usable before the shell is mounted. */
+#content { margin: 0 var(--ui-content-spacing) 0 calc(var(--ui-sidebar-width) + var(--ui-content-spacing)); }
+#content > p { color: inherit; margin-bottom: 15px; }
+#menu {
+    width: var(--ui-sidebar-width);
+    border-right: 1px solid var(--arc-border);
+    margin: 0;
+    top: 0;
+    background: var(--arc-surface);
+    bottom: 0;
+    position: fixed;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+#menu h1 a { font-style: normal; color: var(--arc-text); }
+#menu p { border: 0; padding: 0; }
+#menu #dbs { padding: 0; border-bottom: 0; box-sizing: border-box; }
+#menu #dbs select { outline: 0; width: 100%; }
+#menu p.links { border: 0; flex-wrap: wrap; }
+#menu p.links a { margin: 0; }
+#menu p.links a.active { font-weight: bold; }
+#content p.links a { margin: 0; }
+#content p.links a:last-child { border-width: 1px; }
+#content p.links a:hover { color: var(--arc-text); }
+#menu p, #tables { border-bottom: 0; }
+#tables { flex: 1; overflow: hidden !important; overflow-y: auto !important; }
+#tables::-webkit-scrollbar { background: transparent; width: 6px; }
+#tables::-webkit-scrollbar-thumb { background: var(--arc-raised); border-radius: 10px; }
+#tables::-webkit-scrollbar-button,
+#tables::-webkit-scrollbar-track,
+#tables::-webkit-scrollbar-track-piece,
+#tables::-webkit-scrollbar-corner,
+#tables::-webkit-resizer {
+    background: transparent;
+}
+#tables li { display: flex; }
+#tables a:nth-child(2) { flex: 1; order: -1; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; }
+.rtl #tables a:first-child, .rtl #tables br + a { display: block; margin-left: 15px; }
+#tables a { color: var(--arc-muted); }
+#tables a:hover, #tables a:hover + a { color: var(--arc-text); }
+#tables a.active, #tables a.active + a { color: var(--arc-text); }
+#tables br { display: none; }
+.js .column { background: var(--arc-muted); border-radius: var(--ui-radius); padding: 2px; }
+.js .column:not(.hidden) { display: inline-flex; overflow: hidden; }
+.js .column a,
+.js .column a:hover {
+    color: var(--arc-surface);
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    justify-content: center;
+    text-indent: -4px;
+}
+.js .column a:hover { background: var(--arc-surface); color: var(--arc-muted); text-decoration: none; }
+#breadcrumb { margin: 0 !important; position: static; background: none; }
+#breadcrumb, #breadcrumb a:hover { color: var(--arc-text); }
+.rtl #breadcrumb { margin: 0; padding: 25px 0 0; right: 430px; }
+.logout, .rtl .logout { top: 30px; right: var(--ui-content-spacing); }
+.rtl .logout { right: auto; left: var(--ui-content-spacing); }
+.logout input { margin: 0 !important; }
+
+/* Browser controls retain Adminer submission and keyboard semantics. */
+select {
+    box-sizing: border-box;
+    margin: 0;
+    border: 0;
+    padding: 12px 40px 12px 16px;
+    font-size: 16px;
+    color: var(--arc-text);
+    background: var(--arc-surface);
+    outline: 0;
+    display: inline-block;
+    width: auto;
+    vertical-align: middle;
+    border-radius: var(--ui-radius);
+}
+.layout .function select { min-width: 140px; }
+input:not([type]):not(:where(.arc-island *)),
+input[type="color"]:not(:where(.arc-island *)),
+input[type="email"]:not(:where(.arc-island *)),
+input[type="number"]:not(:where(.arc-island *)),
+input[type="password"]:not(:where(.arc-island *)),
+input[type="tel"]:not(:where(.arc-island *)),
+input[type="url"]:not(:where(.arc-island *)),
+input[type="text"]:not(:where(.arc-island *)),
+input[type="search"]:not(:where(.arc-island *)),
+textarea:not(:where(.arc-island *)) {
+    margin: 0;
+    box-sizing: border-box;
+    color: var(--arc-text);
+    background: var(--arc-surface);
+    transition: background 0.24s;
+    vertical-align: middle;
+}
+input:not([type]):not(:where(.arc-island *)):focus,
+input[type="color"]:not(:where(.arc-island *)):focus,
+input[type="email"]:not(:where(.arc-island *)):focus,
+input[type="number"]:not(:where(.arc-island *)):focus,
+input[type="password"]:not(:where(.arc-island *)):focus,
+input[type="tel"]:not(:where(.arc-island *)):focus,
+input[type="url"]:not(:where(.arc-island *)):focus,
+input[type="text"]:not(:where(.arc-island *)):focus,
+input[type="search"]:not(:where(.arc-island *)):focus,
+textarea:not(:where(.arc-island *)):focus,
+select:not(:where(.arc-island *)):focus {
+    outline: 0;
+    background-color: var(--arc-raised);
+}
+table:not(#table) input:not([type]):not(:where(.arc-island *)),
+table:not(#table) input[type="color"]:not(:where(.arc-island *)),
+table:not(#table) input[type="email"]:not(:where(.arc-island *)),
+table:not(#table) input[type="number"]:not(:where(.arc-island *)),
+table:not(#table) input[type="password"]:not(:where(.arc-island *)),
+table:not(#table) input[type="tel"]:not(:where(.arc-island *)),
+table:not(#table) input[type="url"]:not(:where(.arc-island *)),
+table:not(#table) input[type="text"]:not(:where(.arc-island *)),
+table:not(#table) input[type="search"]:not(:where(.arc-island *)) {
+    min-width: 280px;
+}
+input[type="submit"],
+input[type="button"] {
+    border: 0;
+    cursor: pointer;
+    outline: 0;
+    background: var(--arc-primary);
+    color: var(--arc-on-primary);
+    transition: background 0.4s ease;
+    box-shadow: none;
+}
+input[type="submit"]:hover, input[type="button"]:hover { box-shadow: none; }
+input[type="submit"][disabled],
+input[type="button"][disabled],
+input[type="submit"][disabled]:hover,
+input[type="button"][disabled]:hover {
+    background: var(--arc-raised) !important;
+    color: var(--arc-muted);
+    cursor: not-allowed;
+    box-shadow: none;
+    transition: none;
+}
+.logout input[type="submit"] { color: var(--arc-text); background: transparent; box-shadow: none; }
+.logout input[type="submit"]:hover { color: var(--arc-text); box-shadow: none; }
+input[type="checkbox"],
+input[type="radio"] {
+    background: transparent;
+    border: 2px solid var(--arc-border);
+    border-radius: var(--ui-checkbox-radius);
+    -webkit-appearance: none;
+    cursor: pointer;
+    position: relative;
+    margin: 3px 6px;
+    transition: border-color 0.24s;
+}
+input[type="checkbox"]:focus, input[type="radio"]:focus { outline: 0; border-color: var(--arc-primary); }
+input[type="radio"] { border-radius: var(--ui-radio-radius); }
+input[type="checkbox"]:checked, input[type="radio"]:checked { background-color: var(--arc-primary); border-color: var(--arc-primary); }
+input[type="checkbox"]:checked::before,
+input[type="radio"]:checked::before {
+    content: "✔";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--arc-on-primary);
+}
+.icon, .icon:hover { border-radius: var(--ui-radius); opacity: 0.6; }
+.icon:hover { opacity: 1; }
+#help { background-color: var(--arc-raised); border-radius: var(--ui-radius); }
+label { cursor: pointer; margin-right: 6px; }
+label.block { align-items: center; }
+*[align="right"] > label.block { justify-content: flex-end; }
+.error { color: var(--arc-danger); background: var(--arc-danger-bg); box-shadow: none; }
+.error b { background: inherit; font-weight: bold; }
+#logins a, #tables a, #tables span { background: none; }
+form p input { margin-right: 10px; }
+form p label { display: inline-flex; vertical-align: middle; align-items: center; color: var(--arc-text); margin: 0 8px; }
+#form > p { color: var(--arc-text); margin-bottom: 15px; }
+.size { width: 80px; }
+
+/* Schema diagrams and their typed fields. */
+#schema .table { padding: 6px; background: var(--arc-canvas); border: 1px solid var(--arc-border); box-shadow: none; }
+#schema .table a { display: block; margin: -6px -6px 6px; padding: 12px; background: var(--arc-surface); color: var(--arc-muted); }
+#schema .table br { display: none; }
+#schema .table span { display: block; padding: 3px 6px; }
+#schema .references div { border-color: var(--arc-muted) !important; }
+#schema .table:hover .references div { border-color: var(--arc-border) !important; }
+#schema .table i span { color: var(--arc-success); font-style: normal; }
+.char, .date, .enum, .binary { color: var(--arc-string); }
+#lang { right: 100%; z-index: 10; line-height: normal; left: auto; }
+#lang select {
+    font-size: 12px;
+    border: 0;
+    background: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    cursor: pointer;
+    outline: 0;
+    text-align: right;
+    text-align-last: right;
+}
+#lang select option { text-align: right; }
+.rtl #lang { margin-right: 0; left: 100%; margin-left: -261px; right: auto; }
+.message { color: var(--arc-text); }
+
+/* SQL editor and Jush syntax tokens across database drivers. */
+.sqlarea { width: 100%; }
+.sqlarea.jush {
+    border: 0 !important;
+    padding: 12px 16px !important;
+    margin: 0;
+    box-sizing: border-box;
+    color: var(--arc-text);
+    transition: background 0.24s;
+    outline: 0 !important;
+}
+.jush { color: var(--arc-text); }
+.jush a { color: var(--arc-focus); }
+.jush-sql a, .jush-sql_code a, .jush-sqlite a, .jush-pgsql a, .jush-mssql a, .jush-oracle a, .jush-simpledb a { font-weight: normal; }
+.jush-bac,
+.jush-php_bac,
+.jush-bra,
+.jush-mssql_bra,
+.jush-sqlite_quo,
+.jush-php_quo,
+.jush-quo,
+.jush-quo_one,
+.jush-php_eot,
+.jush-apo,
+.jush-sql_apo,
+.jush-sqlite_apo,
+.jush-sql_quo,
+.jush-sql_eot {
+    color: var(--arc-string);
+}
+.jush-num, .jush-clr { color: var(--arc-success); }
+.jush-sql + .time { padding-left: 15px; color: var(--arc-muted); font-size: 14px; }
+.jush-sql + .time + a { margin-left: 5px; }
+.footer fieldset { padding-bottom: 0; }

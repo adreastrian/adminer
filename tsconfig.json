@@ -10,5 +10,5 @@
     "noEmit": true,
     "allowSyntheticDefaultImports": true
   },
-  "include": ["ui/**/*.ts", "ui/**/*.tsx"]
+  "include": ["resources/ui/**/*.ts", "resources/ui/**/*.tsx"]
 }

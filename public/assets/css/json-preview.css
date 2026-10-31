@@ -1,0 +1,41 @@
+/* Nested JSON tables emitted by AdminerJsonPreview. */
+.json {
+    width: auto;
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin: 4px 0;
+    border: 1px solid var(--arc-border);
+    font-size: 110%;
+}
+.json > tbody { border-color: var(--arc-border); }
+.json tr { border-bottom: 1px solid var(--arc-border); }
+.json tr:last-child { border-bottom: none; }
+.checkable .json .checked th, .checkable .json .checked td { background: transparent; }
+.json th {
+    padding: 0;
+    width: 1px;
+    border-right: 1px solid var(--arc-border);
+    border-bottom: none;
+    color: var(--arc-muted);
+}
+.json td { padding: 0; border: 0; }
+.json code { display: block; background: transparent; padding: 2px 3px; white-space: normal; font-size: inherit; }
+.json .json { width: 100%; border: none; margin: 0; }
+
+/* Local SVG masks replace the plugin's legacy Adminer GIF requests. */
+a.json-icon {
+    display: inline-block;
+    padding: 0;
+    overflow: hidden;
+    text-indent: -50px;
+    vertical-align: middle;
+    mask: url(../icons/expand.svg) center / contain no-repeat;
+    background: var(--arc-muted);
+}
+a.json-icon.json-up { mask-image: url(../icons/shrink.svg); }
+a.json-icon:hover { background-color: var(--arc-text); }
+a.json-link { width: auto; padding-left: 18px; text-indent: 0; }
+a.json-link span { color: var(--arc-text); padding: 0 5px; }
+
+.nojs .json-icon, .nojs .json-link { display: none; }
+.nojs .json { display: table !important; }
