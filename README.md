@@ -22,7 +22,7 @@ Point the site at `public/`. Keep `.env`, `src/`, and `vendor/` outside the web 
 ## Optional credentials
 
 ```bash
-	cp .env.example .env
+cp .env.example .env
 ```
 
 Set `USERNAME` and `PASSWORD` in `.env`. Never commit credentials.
@@ -32,9 +32,9 @@ Set `USERNAME` and `PASSWORD` in `.env`. Never commit credentials.
 Built assets are committed. After changing `resources/ui/`:
 
 ```bash
-	npm ci
-	npm run typecheck
-	npm run build
+npm ci
+npm run typecheck
+npm run build
 ```
 
 - Plugins: [`src/plugins.php`](src/plugins.php)
